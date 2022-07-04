@@ -1,7 +1,6 @@
 package com.example.retroexample.data
 
 import androidx.lifecycle.MutableLiveData
-import com.example.retroexample.model.Result
 import com.example.retroexample.network.QuotesApi
 import com.example.retroexample.network.RetrofitHelper
 import kotlinx.coroutines.CoroutineScope
@@ -11,9 +10,9 @@ import kotlinx.coroutines.withContext
 
 class Repository {
     companion object {
-        fun getCustomers(): MutableLiveData<ArrayList<Result>>? {
-            val quotesMutableLiveData: MutableLiveData<ArrayList<Result>> =
-                MutableLiveData<ArrayList<Result>>()
+        fun getQuotes(): MutableLiveData<ArrayList<String>>? {
+            val quotesMutableLiveData: MutableLiveData<ArrayList<String>> =
+                MutableLiveData<ArrayList<String>>()
             CoroutineScope(Dispatchers.Default).launch {
                 launch(Dispatchers.IO) {
                     val quotesApi = RetrofitHelper.getInstance().create(QuotesApi::class.java)
@@ -22,7 +21,11 @@ class Repository {
                     {
                         response?.let {
                             if (response.isSuccessful) {
-                                quotesMutableLiveData.postValue(response.body()!!.results)
+                                val quotesList = ArrayList<String>()
+                                response.body()!!.results.forEach {
+                                    quotesList.add(it.content)
+                                }
+                                quotesMutableLiveData.postValue(quotesList)
                             }
                         }
                     }
