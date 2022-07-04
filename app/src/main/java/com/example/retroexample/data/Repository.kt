@@ -1,6 +1,9 @@
-package com.example.retroexample
+package com.example.retroexample.data
 
 import androidx.lifecycle.MutableLiveData
+import com.example.retroexample.model.Result
+import com.example.retroexample.network.QuotesApi
+import com.example.retroexample.network.RetrofitHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,7 +16,7 @@ class Repository {
                 MutableLiveData<ArrayList<Result>>()
             CoroutineScope(Dispatchers.Default).launch {
                 launch(Dispatchers.IO) {
-                    val quotesApi = RetrofitHelper?.getInstance().create(QuotesApi::class.java)
+                    val quotesApi = RetrofitHelper.getInstance().create(QuotesApi::class.java)
                     val response = quotesApi.getQuotes()
                     withContext(Dispatchers.Default)
                     {

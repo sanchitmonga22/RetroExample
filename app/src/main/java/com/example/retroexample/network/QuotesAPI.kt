@@ -1,5 +1,6 @@
-package com.example.retroexample
+package com.example.retroexample.network
 
+import com.example.retroexample.model.QuoteList
 import retrofit2.Response
 import retrofit2.http.GET
 

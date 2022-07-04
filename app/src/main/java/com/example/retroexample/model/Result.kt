@@ -1,4 +1,4 @@
-package com.example.retroexample
+package com.example.retroexample.model
 
 data class Result(
     val _id: String,
